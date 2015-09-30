@@ -1,0 +1,120 @@
+/* 
+    Document   : style
+    Created on : 10-mei-2013, 14:53:39
+    Author     : Willem Van Iseghem, wforums.net
+    Description:
+        Stylesheet for the mini-project RSA decryption
+*/
+#panel,#panels,#primestatus,#copy {
+    width: 98%;
+    background-color: #333333; 
+    color: #fff;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#panel {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    min-height: 30px;
+    padding: 5px 5px 0px 5px;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+#panels {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 0px 5px 5px 5px;
+}
+
+#primestatus,#copy {
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 5px; 
+}
+
+#panel li {
+    width: 20%;
+    float: left;
+    text-align: center;
+    line-height: 20px;
+}
+
+#panel a, #panels a {
+    color: #ffffff;
+}
+
+#panel li a { 
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+}
+#panels>div {
+    padding: 5px;
+    border-radius: 5px;
+    display: none;
+}
+
+#panels .active {
+    display: block;
+}
+
+#panels div:first-child {
+    border-top-left-radius: 0px; 
+}
+
+#panels div:last-child {
+    border-top-right-radius: 0px;  
+}
+
+#panel li.active a, #panels div {
+    background-color: #666666;
+}
+
+#panel li a:hover {    
+    background-color: #cccccc;
+    color: #000;
+}
+
+#panel li.active a, #panel li a:hover {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;    
+}
+
+table {
+    width: 100%;
+    border: 1px black solid;
+    border-collapse: collapse;
+}
+th {
+    text-align: left;
+}
+td {
+    margin-top: 5px;                
+}
+td,th {
+    border-bottom: 1px solid black;
+}
+
+.noborders td, .noborders, .example, .example td {
+    border: none;
+}
+
+.example {    
+    border-radius: 5px;
+    background-color:lightsteelblue;
+    margin-top: 5px;
+}
+
+.example td {
+    padding: 5px;
+    color: black;
+    width: 75%;
+    word-break: break-all;
+
+}
+
+.example td:first-of-type {
+    width: 25%;
+}
