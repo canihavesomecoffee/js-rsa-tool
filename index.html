@@ -1,189 +1,220 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>RSA Encryption, Decryption, Prime calculator</title>
-        <link rel="stylesheet" type="text/css" href="style.css" />
-        <script type="text/javascript" src="js/LAB.js"></script>
-        <script type="text/JavaScript">
-            /* <![CDATA[ */
-            $LAB                
-            .script("js/biginteger.js").wait()
-            .script("js/CommonFunctions.js").wait()
-            .script("js/Prime.js").wait()
-            .script("js/Decryptor.js")
-            .script("js/PrimeCalculator.js").wait()
-            .script("js/main.js")             
-            .wait(function(){
-                load();
-            });
-            /* ]]> */
-        </script>
-		<!-- icons -->
-		<link rel="apple-touch-icon" sizes="57x57" href="icons/apple-touch-icon-57x57.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="icons/apple-touch-icon-114x114.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="icons/apple-touch-icon-72x72.png">
-		<link rel="apple-touch-icon" sizes="144x144" href="icons/apple-touch-icon-144x144.png">
-		<link rel="apple-touch-icon" sizes="60x60" href="icons/apple-touch-icon-60x60.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="icons/apple-touch-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="icons/apple-touch-icon-76x76.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="icons/apple-touch-icon-152x152.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180x180.png">
-		<link rel="shortcut icon" href="icons/favicon.ico">
-		<link rel="icon" type="image/png" href="icons/favicon-192x192.png" sizes="192x192">
-		<link rel="icon" type="image/png" href="icons/favicon-160x160.png" sizes="160x160">
-		<link rel="icon" type="image/png" href="icons/favicon-96x96.png" sizes="96x96">
-		<link rel="icon" type="image/png" href="icons/favicon-16x16.png" sizes="16x16">
-		<link rel="icon" type="image/png" href="icons/favicon-32x32.png" sizes="32x32">
-		<meta name="msapplication-TileColor" content="#fcf323">
-		<meta name="msapplication-TileImage" content="icons/mstile-144x144.png">
-		<meta name="msapplication-config" content="icons/browserconfig.xml">
-    </head>
-    <body>
-        <ul id="panel">
-            <li class="active"><a href="#intro" onclick="toggle(this);">Introduction</a></li>
-            <li><a href="#calculate" onclick="toggle(this);">Calculate primes</a></li>
-            <li><a href="#encrypt" onclick="toggle(this);">RSA Encryption</a></li>
-            <li><a href="#decrypt" onclick="toggle(this);">RSA Decryption</a></li>
-            <li><a href="#examples" onclick="toggle(this);">Examples</a></li>
-        </ul>
-        <div id="panels">
-            <div class="active">
-                <h1>RSA Encryption, Decryption, Prime calculator</h1>
-                <p>This is a little tool I wrote last year when one of the courses I followed explained how RSA worked. Besides just the theory, we also had to be able to decrypt simple RSA messages. And since I'm studying IT, the decision to make it easy for me was quickly made. With this new version I played with JS OO, so feel free to take a look at the source.</p>
-                <p>With this tool you'll be able to Calculate primes, and encrypt or decrypt a message with the RSA algorithm.</p>
-                <p>Currently I stored all the primes between <span id="supportStart">0</span> and <span id="supportEnd">0</span>, so those can be used to encrypt or decrypt. If you want bigger ones, you can use the calculate tab to dynamically (untill page reload) push new primes onto the stack.</p>
-                <p>If you encounter any issues or have suggestions/improvements, please go to the <a href="http://www.wforums.net">main</a> website and use the contact form to get in touch.</p>
-            </div>
-            <div>
-                <h1>Calculate primes</h1>
-                <p>Below you can calculate all the primes between two given bounds. Once finished, it will show all the prime numbers in the textarea. If you tick the explain box, it will show below why a number isn't a prime.</p>
-                <table class="noborders">
-                    <tr>
-                        <td>Start from:</td>
-                        <td><input type="text" id="startwith" /></td>
-                    </tr>
-                    <tr>
-                        <td>End with:</td>
-                        <td><input type="text" id="endwith" /></td>
-                    </tr>
-                    <tr>
-                        <td>Explain the results?</td>
-                        <td><input type="checkbox" id="shouldExplain" /> (WARNING! Causes severe lag/unresponsiveness with big ranges)</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <input type="button" value="Calculate primes" onclick="calc();" />
-                            <input type="button" value="Clear" onclick="clearcalc();" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <textarea id="resultCalc" cols="100" rows="5"></textarea>
-                        </td>
-                    </tr>
-                </table> 
-                <p>Explanations:</p>
-                <div id="explain"></div>                
-            </div>
-            <div>
-                <h1>RSA Encryption</h1>
-                <p>Here you can create an RSA message, if you provide some information.</p>
-                <p>Prime 1: <input type="text" id="p" /> Prime 2: <input type="text" id="q" /> or <input type="button" value="Pick two random primes" onclick="generateRandom();" /></p>
-                <p>Choose e, so that GCD(e,K) is 1: <input type="text" id="publice" /></p>
-                <p>Message (plain-text): <br /><textarea id="toEncrypt" cols="20" rows="5"></textarea></p>
-                <p><input type="button" onclick="handleEncryption();" value="Start encryption" /><input type="button" onclick="document.getElementById('resultEn').innerHTML = ''; document.getElementById('statusEn').textContent = 'Not started';" value="Clear results"/></p>
-                <p>Status: <span id="statusEn">Not Started</span></p>
-                <div id="resultEn"></div>                
-            </div>
-            <div>
-                <h1>RSA Decryption</h1>
-                <p>Here you can try to bruteforce and decrypt a given RSA message if you have the public key (N and e) and the message.</p>
-                <p>Public key: <br />N: <input type="text" id="n" /> e: <input type="text" id="e" /></p>
-                <p>Message<br /><textarea id="message" cols="20" rows="5"></textarea></p>
-                <p><input type="button" onclick="handleDecryption();" value="Start decryption" /><input type="button" onclick="document.getElementById('result').innerHTML = ''; document.getElementById('status').textContent = 'Not started';" value="Clear results"/></p>
-                <p>Status: <span id="status">Not Started</span></p>
-                <div id="result"></div>                
-            </div>
-            <div>
-                <h1>RSA Examples</h1>
-                <p>Below you can find some examples that you could use to test the tool.</p>
-                <table class="example">
-                    <tr>
-                        <td>Original message</td>
-                        <td>Bewijs gevonden</td>
-                    </tr>
-                    <tr>
-                        <td>N</td>
-                        <td>69647</td>
-                    </tr>
-                    <tr>
-                        <td>e</td>
-                        <td>53</td>
-                    </tr>
-                    <tr>
-                        <td>Encoded bits</td>
-                        <td>0011000100011010101010101001001000011011110110111110101000111111000100111101101011011011110111010000110101010110011100000111000001111101</td>
-                    </tr>
-                </table>
-                <table class="example">
-                    <tr>
-                        <td>Original message</td>
-                        <td>Here you can create an RSA message, if you provide some information.</td>
-                    </tr>
-                    <tr>
-                        <td>N</td>
-                        <td>148730576801</td>
-                    </tr>
-                    <tr>
-                        <td>e</td>
-                        <td>13</td>
-                    </tr>
-                    <tr>
-                        <td>Encoded bits</td>
-                        <td>0101101010110110111111011000111110111000001101011001010001101101101100010000001011111111110100011001101001101011100111101000011010001111000000101100101000110001111101111000101100110110100100011110011110010000000000100100101101000000010000001010111011101111110011101101001000011001001000101111011001000110010001001000010011111100111001011111010000011101011011011011110100001111101100011001111101110000101100100000110000000110101000010101101000111000101100110100111000110111010000010001101111101000110101001010101011101011101000000001010011110110111001110111111110001100000110110001010000101111100000010101100100000001011010100110000111101100110000</td>
-                    </tr>
-                </table>
-                <table class="example">
-                    <tr>
-                        <td>Original message</td>
-                        <td>&copy; 2013-now Willem Van Iseghem (wforums.net), all rights reserved.</td>
-                    </tr>
-                    <tr>
-                        <td>N</td>
-                        <td>928704363481</td>
-                    </tr>
-                    <tr>
-                        <td>e</td>
-                        <td>97</td>
-                    </tr>
-                    <tr>
-                        <td>Encoded bits</td>
-                        <td>0100100110111111101011101100010100000011001100011100000110101001011100000010101110001001110010100111000010001101101011011000101101000111101100100011010101101000100011010110010001000111011101110011101111001100011100010001111111101010001111110111000000100011011110000110101000000000010101001101001101110110100100011111101110100101000100011010110101000111100011010101110011001011111100100110011011110010100001010110011111100111001101100001011110001000110110110010001101001110001111011001111101001101011011110011000111111110</td>
-                    </tr>
-                </table>
-                <table class="example">
-                    <tr>
-                        <td>Original message</td>
-                        <td>Bewijs gevonden</td>
-                    </tr>
-                    <tr>
-                        <td>N</td>
-                        <td>999962000357</td>
-                    </tr>
-                    <tr>
-                        <td>e</td>
-                        <td>53</td>
-                    </tr>
-                    <tr>
-                        <td>Encoded bits</td>
-                        <td>011111001011110101001000011101110110101100101110010000100010000110000011001110011101001110010001100110101101000110101110</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div id="primestatus">
-            <span id="primestatusspan">No primes loaded.</span>
-        </div>
-        <div id="copy">&copy; 2013-now Willem Van Iseghem (wforums.net), all rights reserved.</div>
-    </body>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RSA encryption, decryption and prime calculator</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script type="text/javascript" src="js/LAB.js"></script>
+    <script type="text/JavaScript">
+        /* <![CDATA[ */
+        $LAB
+                .script("js/biginteger.js").wait()
+                .script("js/CommonFunctions.js").wait()
+                .script("js/Prime.js").wait()
+                .script("js/Decryptor.js")
+                .script("js/PrimeCalculator.js").wait()
+                .script("js/main.js")
+                .wait(function () {
+                    load();
+                });
+        /* ]]> */
+    </script>
+    <!-- icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="icons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="icons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="icons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="icons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180x180.png">
+    <link rel="shortcut icon" href="icons/favicon.ico">
+    <link rel="icon" type="image/png" href="icons/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="icons/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="icons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="icons/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="icons/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#fcf323">
+    <meta name="msapplication-TileImage" content="icons/mstile-144x144.png">
+    <meta name="msapplication-config" content="icons/browserconfig.xml">
+</head>
+<body>
+<ul id="panel">
+    <li class="active"><a href="#intro" onclick="toggle(this);">Introduction</a></li>
+    <li><a href="#calculate" onclick="toggle(this);">Calculate primes</a></li>
+    <li><a href="#encrypt" onclick="toggle(this);">RSA Encryption</a></li>
+    <li><a href="#decrypt" onclick="toggle(this);">RSA Decryption</a></li>
+    <li><a href="#examples" onclick="toggle(this);">Examples</a></li>
+</ul>
+<div id="panels">
+    <div class="active">
+        <h1>RSA encryption, decryption and prime calculator</h1>
+        <p>This is a little tool I wrote a little while ago during a course that explained how RSA works. The course
+            wasn't just theoretical, but we also needed to decrypt simple RSA messages. Given that I don't like
+            repetitive tasks, my decision to automate the decryption was quickly made. Feel free to take a look at the
+            code to see how it works.</p>
+        <p>With this tool you'll be able to calculate primes, encrypt and decrypt message(s) using the RSA algorithm.</p>
+        <p>Currently all the primes between <span id="supportStart">0</span> and <span id="supportEnd">0</span> are
+            stored in a bunch of javascript files, so those can be used to encrypt or decrypt (after they are
+            dynamically loaded). In case this isn't sufficient, you can generate additional primes, which will be
+            preserved until the page reloads.</p>
+        <p>If you encounter any issues or have suggestions/improvements, please create a new
+            <a href="https://github.com/canihavesomecoffee/js-rsa-tool/issues/new">issue</a> on the
+            <a href="https://github.com/canihavesomecoffee/js-rsa-tool">GitHub project page</a>.</p>
+        <p>If you are interested in my personal site, you can visit it on
+            <a href="http://www.canihavesome.coffee">canihavesome.cofffee</a>.</p>
+    </div>
+    <div>
+        <h1>Calculate primes</h1>
+        <p>Below you can <span class="strike-through">calculate</span> brute-force all the primes between a given lower
+            and upper bound. Once that's finished, it will show all the prime numbers in the text box. If you want some
+            explanation why a given number is not a prime number, tick the box, and an explanation will be shown for
+            that number.</p>
+        <table class="no-borders">
+            <tr>
+                <td><label for="startwith">From</label>:</td>
+                <td><input type="text" id="startwith" /></td>
+            </tr>
+            <tr>
+                <td><label for="endwith">To</label>:</td>
+                <td><input type="text" id="endwith" /></td>
+            </tr>
+            <tr>
+                <td><label for="shouldExplain">Explain the results</label>?</td>
+                <td>
+                    <input type="checkbox" id="shouldExplain"/>
+                    (WARNING! Causes severe lag/unresponsiveness with big ranges)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="Calculate primes" onclick="calc();"/>
+                    <input type="button" value="Clear" onclick="clearcalc();"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label for="resultCalc">Found primes</label>:<br/>
+                    <textarea id="resultCalc" cols="100" rows="5"></textarea>
+                </td>
+            </tr>
+        </table>
+        <p>Explanations:</p>
+        <div id="explain"></div>
+    </div>
+    <div>
+        <h1>RSA Encryption</h1>
+        <p>Here you can create an RSA message, if you provide some information.</p>
+        <p>Prime 1: <input type="text" id="p"/> Prime 2: <input type="text" id="q"/> or
+            <input type="button" value="Pick two random primes" onclick="generateRandom();"/></p>
+        <p>Choose e, so that GCD(e,K) is 1: <input type="text" id="publice"/></p>
+        <p>Message (plain-text): <br/><textarea id="toEncrypt" cols="20" rows="5"></textarea></p>
+        <p>
+            <input type="button" onclick="handleEncryption();" value="Start encryption"/><input type="button" onclick="document.getElementById('resultEn').innerHTML = ''; document.getElementById('statusEn').textContent = 'Not started';" value="Clear results"/>
+        </p>
+        <p>Status: <span id="statusEn">Not Started</span></p>
+        <div id="resultEn"></div>
+    </div>
+    <div>
+        <h1>RSA Decryption</h1>
+        <p>Here you can try to bruteforce and decrypt a given RSA message if you have the public key (N and e) and the
+            message.</p>
+        <p>Public key: <br/>N: <input type="text" id="n"/> e: <input type="text" id="e"/></p>
+        <p>Message<br/><textarea id="message" cols="20" rows="5"></textarea></p>
+        <p>
+            <input type="button" onclick="handleDecryption();" value="Start decryption"/><input type="button" onclick="document.getElementById('result').innerHTML = ''; document.getElementById('status').textContent = 'Not started';" value="Clear results"/>
+        </p>
+        <p>Status: <span id="status">Not Started</span></p>
+        <div id="result"></div>
+    </div>
+    <div>
+        <h1>RSA Examples</h1>
+        <p>Below you can find some examples that you could use to test the tool.</p>
+        <table class="example">
+            <tr>
+                <td>Original message</td>
+                <td>Bewijs gevonden</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>69647</td>
+            </tr>
+            <tr>
+                <td>e</td>
+                <td>53</td>
+            </tr>
+            <tr>
+                <td>Encoded bits</td>
+                <td>
+                    0011000100011010101010101001001000011011110110111110101000111111000100111101101011011011110111010000110101010110011100000111000001111101
+                </td>
+            </tr>
+        </table>
+        <table class="example">
+            <tr>
+                <td>Original message</td>
+                <td>Here you can create an RSA message, if you provide some information.</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>148730576801</td>
+            </tr>
+            <tr>
+                <td>e</td>
+                <td>13</td>
+            </tr>
+            <tr>
+                <td>Encoded bits</td>
+                <td>
+                    0101101010110110111111011000111110111000001101011001010001101101101100010000001011111111110100011001101001101011100111101000011010001111000000101100101000110001111101111000101100110110100100011110011110010000000000100100101101000000010000001010111011101111110011101101001000011001001000101111011001000110010001001000010011111100111001011111010000011101011011011011110100001111101100011001111101110000101100100000110000000110101000010101101000111000101100110100111000110111010000010001101111101000110101001010101011101011101000000001010011110110111001110111111110001100000110110001010000101111100000010101100100000001011010100110000111101100110000
+                </td>
+            </tr>
+        </table>
+        <table class="example">
+            <tr>
+                <td>Original message</td>
+                <td>&copy; 2013-now Willem Van Iseghem (wforums.net), all rights reserved.</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>928704363481</td>
+            </tr>
+            <tr>
+                <td>e</td>
+                <td>97</td>
+            </tr>
+            <tr>
+                <td>Encoded bits</td>
+                <td>
+                    0100100110111111101011101100010100000011001100011100000110101001011100000010101110001001110010100111000010001101101011011000101101000111101100100011010101101000100011010110010001000111011101110011101111001100011100010001111111101010001111110111000000100011011110000110101000000000010101001101001101110110100100011111101110100101000100011010110101000111100011010101110011001011111100100110011011110010100001010110011111100111001101100001011110001000110110110010001101001110001111011001111101001101011011110011000111111110
+                </td>
+            </tr>
+        </table>
+        <table class="example">
+            <tr>
+                <td>Original message</td>
+                <td>Bewijs gevonden</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>999962000357</td>
+            </tr>
+            <tr>
+                <td>e</td>
+                <td>53</td>
+            </tr>
+            <tr>
+                <td>Encoded bits</td>
+                <td>
+                    011111001011110101001000011101110110101100101110010000100010000110000011001110011101001110010001100110101101000110101110
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="primestatus">
+    <span id="primestatusspan">No primes loaded.</span>
+</div>
+<div id="copy">&copy; 2013-now Willem Van Iseghem (Can I Have Some Coffee), all rights reserved.</div>
+</body>
 </html>
