@@ -104,32 +104,34 @@
     </div>
     <div>
         <h1>RSA Encryption</h1>
-        <p>Here you can create an RSA message, if you provide some information.</p>
-        <p>Prime 1: <input type="text" id="p"/> Prime 2: <input type="text" id="q"/> or
-            <input type="button" value="Pick two random primes" onclick="generateRandom();"/></p>
-        <p>Choose e, so that GCD(e,K) is 1: <input type="text" id="publice"/></p>
-        <p>Message (plain-text): <br/><textarea id="toEncrypt" cols="20" rows="5"></textarea></p>
+        <p>Here you can create an RSA encrypted message by filling in the form.</p>
+        <p><label for="p">First prime</label>: <input type="text" id="p"/> <label for="q">Second prime</label>: <input type="text" id="q"/> or
+            <input type="button" value="Pick two random primes" onclick="generateRandom();" /></p>
+        <p><label for="publice">Choose e, so that GCD(e,K) is 1</label>: <input type="text" id="publice"/></p>
+        <p><label for="toEncrypt">Plain-text message</label>: <br/><textarea id="toEncrypt" cols="20" rows="5"></textarea></p>
         <p>
-            <input type="button" onclick="handleEncryption();" value="Start encryption"/><input type="button" onclick="document.getElementById('resultEn').innerHTML = ''; document.getElementById('statusEn').textContent = 'Not started';" value="Clear results"/>
+            <input type="button" value="Start encryption" onclick="handleEncryption();" />
+            <input type="button" value="Clear results" onclick="document.getElementById('resultEn').innerHTML = ''; document.getElementById('statusEn').textContent = 'Not started yet.';" />
         </p>
-        <p>Status: <span id="statusEn">Not Started</span></p>
+        <p>Status: <span id="statusEn">Not started yet.</span></p>
         <div id="resultEn"></div>
     </div>
     <div>
         <h1>RSA Decryption</h1>
-        <p>Here you can try to bruteforce and decrypt a given RSA message if you have the public key (N and e) and the
+        <p>Here you can try to brute-force and decrypt a given RSA message if you have the public key (N and e) and the
             message.</p>
-        <p>Public key: <br/>N: <input type="text" id="n"/> e: <input type="text" id="e"/></p>
-        <p>Message<br/><textarea id="message" cols="20" rows="5"></textarea></p>
+        <p>Public key: <br/><label for="n">N</label>: <input type="text" id="n"/> <label for="e">e</label>: <input type="text" id="e"/></p>
+        <p><label for="message">Message</label><br/><textarea id="message" cols="20" rows="5"></textarea></p>
         <p>
-            <input type="button" onclick="handleDecryption();" value="Start decryption"/><input type="button" onclick="document.getElementById('result').innerHTML = ''; document.getElementById('status').textContent = 'Not started';" value="Clear results"/>
+            <input type="button" value="Start decryption" onclick="handleDecryption();" />
+            <input type="button" value="Clear results" onclick="document.getElementById('result').innerHTML = ''; document.getElementById('status').textContent = 'not started yet.';" />
         </p>
-        <p>Status: <span id="status">Not Started</span></p>
+        <p>Progress: <span id="status">not started yet.</span></p>
         <div id="result"></div>
     </div>
     <div>
-        <h1>RSA Examples</h1>
-        <p>Below you can find some examples that you could use to test the tool.</p>
+        <h1>Example tab</h1>
+        <p>This page lists a couple of examples which you can use on the other tabs.</p>
         <table class="example">
             <tr>
                 <td>Original message</td>
@@ -215,6 +217,6 @@
 <div id="primestatus">
     <span id="primestatusspan">No primes loaded.</span>
 </div>
-<div id="copy">&copy; 2013-now Willem Van Iseghem (Can I Have Some Coffee), all rights reserved.</div>
+<div id="copy">&copy; 2013-now Willem Van Iseghem (Can I Have Some Coffee), all rights reserved. Hosted on GitHub.</div>
 </body>
 </html>
