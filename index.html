@@ -59,10 +59,16 @@
             dynamically loaded). In case this isn't sufficient, you can generate additional primes, which will be
             preserved until the page reloads.</p>
         <p>If you encounter any issues or have suggestions/improvements, please create a new
-            <a href="https://github.com/canihavesomecoffee/js-rsa-tool/issues/new">issue</a> on the
-            <a href="https://github.com/canihavesomecoffee/js-rsa-tool">GitHub project page</a>.</p>
+            <a target="_blank" href="https://github.com/canihavesomecoffee/js-rsa-tool/issues/new">issue</a> on the
+            <a target="_blank" href="https://github.com/canihavesomecoffee/js-rsa-tool">GitHub project page</a>.</p>
         <p>If you are interested in my personal site, you can visit it on
-            <a href="http://www.canihavesome.coffee">canihavesome.cofffee</a>.</p>
+            <a target="_blank" href="http://www.canihavesome.coffee">canihavesome.cofffee</a>.</p>
+        <h3>Acknowledgments</h3>
+        <p>I haven't written every line of code that's being used to show and generate this tool myself. I'd like to thank:</p>
+        <ul>
+            <li>Matthew Crumley and other contributors for the <a target="_blank" href="https://github.com/silentmatt/javascript-biginteger">BigInteger</a> js library</li>
+            <li>Kyle Simpson for the <a target="_blank" href="https://github.com/getify/LABjs">LABjs</a> library</li>
+        </ul>
     </div>
     <div>
         <h1>Calculate primes</h1>
@@ -218,5 +224,20 @@
     <span id="primestatusspan">No primes loaded.</span>
 </div>
 <div id="copy">&copy; 2013-now Willem Van Iseghem (Can I Have Some Coffee), all rights reserved. Hosted on GitHub.</div>
+<!-- Piwik -->
+<script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+        var u="//piwik.canihavesome.coffee/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', 6]);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+</script>
+<noscript><p><img src="//piwik.canihavesome.coffee/piwik.php?idsite=6" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
 </body>
 </html>
